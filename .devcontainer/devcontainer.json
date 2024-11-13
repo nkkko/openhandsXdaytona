@@ -5,11 +5,12 @@
         "context": "."
     },
     "runArgs": [
-        "--privileged",
-        "-v", "/var/run/docker.sock:/var/run/docker.sock",
-        "-p", "3000:3000",
-        "--add-host", "host.docker.internal:host-gateway"
+        "--privileged"
     ],
+    "mounts": [
+        "source=/var/run/docker-host.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "overrideCommand": false,
     "containerEnv": {
         "SANDBOX_RUNTIME_CONTAINER_IMAGE": "docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik",
         "LOG_ALL_EVENTS": "true"
