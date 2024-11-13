@@ -1,6 +1,8 @@
 {
     "name": "OpenHands Dev Container",
-    "dockerFile": "Dockerfile",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
     "runArgs": [
         "--pull=always",
         "-v", "/var/run/docker.sock:/var/run/docker.sock",
@@ -15,7 +17,6 @@
         "vscode": {
             "extensions": [
                 "ms-azuretools.vscode-docker"
-                // Add other relevant extensions here
             ]
         }
     },
