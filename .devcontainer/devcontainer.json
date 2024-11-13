@@ -1,27 +1,27 @@
 {
-    "name": "OpenHands Dev Container",
-    "build": {
-        "dockerfile": "Dockerfile",
-        "context": "."
-    },
+    "name": "OpenHands Development Environment",
+    "image": "docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik",
     "runArgs": [
-        "--privileged"
+        "--pull=always",
+        "-e", "SANDBOX_RUNTIME_CONTAINER_IMAGE=docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik",
+        "-v", "/var/run/docker.sock:/var/run/docker.sock",
+        "-e", "LOG_ALL_EVENTS=true",
+        "--add-host", "host.docker.internal:host-gateway"
     ],
-    "mounts": [
-        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
-    ],
-    "overrideCommand": false,
-    "containerEnv": {
-        "SANDBOX_RUNTIME_CONTAINER_IMAGE": "docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik",
-        "LOG_ALL_EVENTS": "true"
-    },
+    "forwardPorts": [3000],
+    "postCreateCommand": "npm install",
     "customizations": {
         "vscode": {
             "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "ms-python.python",
                 "ms-azuretools.vscode-docker"
             ]
         }
     },
-    "remoteUser": "root",
-    "postCreateCommand": "dockerd-entrypoint.sh & sleep 10 && docker pull docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik"
+    "remoteUser": "node",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    }
 }
