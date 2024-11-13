@@ -1,10 +1,11 @@
 {
     "name": "OpenHands Dev Container",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "context": "."
     },
     "runArgs": [
-        "--pull=always",
+        "--privileged",
         "-v", "/var/run/docker.sock:/var/run/docker.sock",
         "-p", "3000:3000",
         "--add-host", "host.docker.internal:host-gateway"
@@ -21,5 +22,5 @@
         }
     },
     "remoteUser": "root",
-    "postCreateCommand": "docker pull docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik"
+    "postCreateCommand": "dockerd-entrypoint.sh & sleep 10 && docker pull docker.all-hands.dev/all-hands-ai/runtime:0.13-nikolaik"
 }
